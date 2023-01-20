@@ -64,5 +64,4 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Client deleted successufully");
     }
 
-
 }
