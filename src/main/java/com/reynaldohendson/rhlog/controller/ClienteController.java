@@ -39,7 +39,7 @@ public class ClienteController {
     public ResponseEntity<Object> buscarPorId(@PathVariable ("id") Long id){
         Optional<Cliente> clienteOptional = clienteService.findById(id);
         if(!clienteOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
         }
         return ResponseEntity.status(HttpStatus.OK).body(clienteOptional.get());
     }
@@ -48,7 +48,7 @@ public class ClienteController {
     public ResponseEntity<Object> atualizarCliente(@PathVariable("id") @Valid Long id,@RequestBody Cliente cliente){
         Optional<Cliente> clienteOptional = clienteService.findById(id);
         if(!clienteOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
         }
         cliente.setId(id);
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.save(cliente));

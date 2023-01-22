@@ -1,5 +1,6 @@
 package com.reynaldohendson.rhlog.service;
 
+import com.reynaldohendson.rhlog.exceptionHandler.NegocioException;
 import com.reynaldohendson.rhlog.model.Cliente;
 import com.reynaldohendson.rhlog.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,13 @@ public class ClienteService {
     }
     @Transactional
     public Cliente save(Cliente cliente) {
+        //Garante que um @, não seja cadastrado 2 vezes
+        boolean emailEmUso = clienteRepository.findByEmail(cliente.getEmail())
+                .stream()
+                .anyMatch(clienteExistente -> !clienteExistente.equals(cliente));
+        if(emailEmUso){
+            throw new NegocioException("Email já consta na base de dados. Cadastre outro email.");
+        }
         return clienteRepository.save(cliente);
     }
 
