@@ -1,5 +1,6 @@
 package com.reynaldohendson.rhlog.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,10 +19,14 @@ public class Entrega {
     private Long id;
     @ManyToOne
     private Cliente cliente;
+    @Embedded
     private Destinatario destinatario;
     private BigDecimal taxa;
     @Enumerated(EnumType.STRING)
-    private StatusEntrega statusEntrega;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private StatusEntrega status;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime dataPedido;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime dataFinalizacao;
 }

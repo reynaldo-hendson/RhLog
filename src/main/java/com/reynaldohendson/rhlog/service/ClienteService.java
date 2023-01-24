@@ -19,6 +19,13 @@ public class ClienteService {
     public ClienteService(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
     }
+    public Cliente buscar(Long id){
+        return  //Exception caso não exista o cliente cadastrado.
+                 clienteRepository.findById(id)
+                .orElseThrow(() -> new NegocioException("Cliente não encontrado."));
+
+    }
+
     @Transactional
     public Cliente save(Cliente cliente) {
         //Garante que um @, não seja cadastrado 2 vezes
