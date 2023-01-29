@@ -1,5 +1,7 @@
 package com.reynaldohendson.rhlog.controller;
 
+import com.reynaldohendson.rhlog.dto.DestinatarioModel;
+import com.reynaldohendson.rhlog.dto.EntregaModel;
 import com.reynaldohendson.rhlog.model.Entrega;
 import com.reynaldohendson.rhlog.repository.EntregaRepository;
 import com.reynaldohendson.rhlog.service.SolicitacaoEntregaService;
@@ -29,9 +31,26 @@ public class EntregaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Entrega> buscar(@PathVariable("id") Long id){
+    public ResponseEntity<EntregaModel> buscar(@PathVariable("id") Long id){
         return entregaRepository.findById(id)
-                .map(ResponseEntity::ok)
+                .map(entrega -> {
+                    EntregaModel entregaModel = new EntregaModel();
+                    entregaModel.setId(entrega.getId());
+                    entregaModel.setNomeCliente(entrega.getCliente().getNome());
+                    entregaModel.setDestinatario(new DestinatarioModel());
+                    entregaModel.getDestinatario().setNome(entrega.getDestinatario().getNome());
+                    entregaModel.getDestinatario().setLogradouro(entrega.getDestinatario().getLogradouro());
+                    entregaModel.getDestinatario().setNumero(entrega.getDestinatario().getNumero());
+                    entregaModel.getDestinatario().setComplemento(entrega.getDestinatario().getComplemento());
+                    entregaModel.getDestinatario().setBairro(entrega.getDestinatario().getBairro());
+                    entregaModel.setTaxa(entrega.getTaxa());
+                    entregaModel.setStatus(entrega.getStatus());
+                    entregaModel.setDataPedido(entrega.getDataPedido());
+                    entregaModel.setDataFinalizacao(entrega.getDataFinalizacao());
+
+
+                    return ResponseEntity.ok(entregaModel);
+                })
                 .orElse(ResponseEntity.notFound().build());
     }
 
