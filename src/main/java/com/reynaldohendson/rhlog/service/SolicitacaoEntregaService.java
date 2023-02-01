@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -30,5 +31,9 @@ public class SolicitacaoEntregaService {
 
         return entregaRepository.save(entrega);
 
+    }
+
+    public List<Entrega> findAll() {
+        return entregaRepository.findAll();
     }
 }

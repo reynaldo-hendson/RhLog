@@ -2,6 +2,7 @@ package com.reynaldohendson.rhlog.controller;
 
 import com.reynaldohendson.rhlog.dto.DestinatarioModel;
 import com.reynaldohendson.rhlog.dto.EntregaModel;
+import com.reynaldohendson.rhlog.mapper.EntregaMapper;
 import com.reynaldohendson.rhlog.model.Entrega;
 import com.reynaldohendson.rhlog.repository.EntregaRepository;
 import com.reynaldohendson.rhlog.service.SolicitacaoEntregaService;
@@ -20,25 +21,23 @@ import java.util.List;
 public class EntregaController {
     private SolicitacaoEntregaService solicitacaoEntregaService;
     private EntregaRepository entregaRepository;
-    private ModelMapper modelMapper;
+    private EntregaMapper entregaMapper;
     @PostMapping
-    public ResponseEntity<Entrega> solicitar(@RequestBody @Valid Entrega entrega){
+    public ResponseEntity<EntregaModel> solicitar(@RequestBody @Valid Entrega entrega){
+        Entrega entregaSolicitada = solicitacaoEntregaService.solicitar(entrega);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(solicitacaoEntregaService.solicitar(entrega));
+                .body(entregaMapper.toModel(entregaSolicitada));
     }
 
     @GetMapping
-    public List<Entrega> listar(){
-        return entregaRepository.findAll();
+    public List<EntregaModel> listar(){
+        return entregaMapper.toCollectionModel(solicitacaoEntregaService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<EntregaModel> buscar(@PathVariable("id") Long id){
         return entregaRepository.findById(id)
-                .map(entrega -> {
-                    EntregaModel entregaModel = modelMapper.map(entrega, EntregaModel.class);
-                    return ResponseEntity.ok(entregaModel);
-                })
+                .map(entrega -> ResponseEntity.ok(entregaMapper.toModel(entrega)))
                 .orElse(ResponseEntity.notFound().build());
     }
 }

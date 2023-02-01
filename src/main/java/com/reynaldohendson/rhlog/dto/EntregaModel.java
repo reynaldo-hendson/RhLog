@@ -1,5 +1,6 @@
 package com.reynaldohendson.rhlog.dto;
 
+import com.reynaldohendson.rhlog.model.ClienteResumoModel;
 import com.reynaldohendson.rhlog.model.StatusEntrega;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import java.time.OffsetDateTime;
 @Setter
 public class EntregaModel {
     private long id;
-    private String nomeCliente;
+    private ClienteResumoModel cliente;
     private DestinatarioModel destinatario;
     private BigDecimal taxa;
     private StatusEntrega status;
