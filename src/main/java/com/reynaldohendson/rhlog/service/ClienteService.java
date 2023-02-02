@@ -38,7 +38,7 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public Iterable<Cliente> listar(){
+    public List<Cliente> listar(){
         return clienteRepository.findAll();
     }
 

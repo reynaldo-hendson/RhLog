@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class EntregaController {
     private SolicitacaoEntregaService solicitacaoEntregaService;
     private EntregaRepository entregaRepository;
     private EntregaMapper entregaMapper;
+
     @PostMapping
     public ResponseEntity<EntregaModel> solicitar(@RequestBody @Valid Entrega entrega){
         Entrega entregaSolicitada = solicitacaoEntregaService.solicitar(entrega);

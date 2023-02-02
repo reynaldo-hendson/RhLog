@@ -1,8 +1,11 @@
 package com.reynaldohendson.rhlog.controller;
 
+import com.reynaldohendson.rhlog.dto.ClienteModel;
+import com.reynaldohendson.rhlog.mapper.ClienteMapper;
 import com.reynaldohendson.rhlog.model.Cliente;
 import com.reynaldohendson.rhlog.service.ClienteService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,21 +16,21 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/rhlog/")
+@AllArgsConstructor
 public class ClienteController {
-    final ClienteService clienteService;
-
-    public ClienteController(ClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
+    private ClienteService clienteService;
+    private ClienteMapper clienteMapper;
 
     @PostMapping
-    public ResponseEntity<Object> saveCliente(@RequestBody @Valid Cliente cliente){
-        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.save(cliente));
+    public ResponseEntity<ClienteModel> saveCliente(@RequestBody @Valid Cliente cliente){
+        Cliente clienteCadastro = clienteService.save(cliente);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(clienteMapper.toModel(clienteCadastro));
 
     }
     @GetMapping("/clientes")
-    public Iterable<Cliente> listar(){
-        return ResponseEntity.status(HttpStatus.OK).body(clienteService.listar()).getBody();
+    public List<ClienteModel> listar(){
+        return clienteMapper.toCollectionModel(clienteService.listar());
     }
 
     @GetMapping("/clientes/{nome}")
