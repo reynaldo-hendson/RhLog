@@ -47,7 +47,7 @@ public class Entrega {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private OffsetDateTime dataFinalizacao;
 
-    public Ocorrencia adicionarEntregaDescricao(String descricao) {
+    public Ocorrencia adicionarOcorrenciaEntrega(String descricao) {
         Ocorrencia ocorrencia = new Ocorrencia();
         ocorrencia.setDescricao(descricao);
         ocorrencia.setDataRegistro(OffsetDateTime.now());

@@ -17,7 +17,7 @@ public class Ocorrencia {
     private long id;
     @ManyToOne
     private Entrega entrega;
-    private String Descricao;
+    private String descricao;
     private OffsetDateTime dataRegistro;
 
 }
