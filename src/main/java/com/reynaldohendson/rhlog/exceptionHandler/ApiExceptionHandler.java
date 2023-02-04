@@ -44,6 +44,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         return handleExceptionInternal(ex,errorApi,headers,status,request);
     }
+    //Erro 400.
     @ExceptionHandler(NegocioException.class)
     public ResponseEntity<Object> handleNegocio(NegocioException ex, WebRequest request){
         HttpStatus status = HttpStatus.BAD_REQUEST;
@@ -53,5 +54,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         errorApi.setTitulo(ex.getMessage());
         return handleExceptionInternal(ex, errorApi, new HttpHeaders(), status,request);
     }
-
+    //Erro 404.
+    @ExceptionHandler(EntidadeNaoEncontradaException.class)
+    public ResponseEntity<Object> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException ex, WebRequest request){
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        ErrorApi errorApi = new ErrorApi();
+        errorApi.setStatus(status.value());
+        errorApi.setDataHora(LocalDateTime.now());
+        errorApi.setTitulo(ex.getMessage());
+        return handleExceptionInternal(ex, errorApi, new HttpHeaders(), status,request);
+    }
 }
