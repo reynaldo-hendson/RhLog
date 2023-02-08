@@ -1,6 +1,7 @@
 package com.reynaldohendson.rhlog.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.reynaldohendson.rhlog.exceptionHandler.NegocioException;
 import com.reynaldohendson.rhlog.validation.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -56,4 +57,19 @@ public class Entrega {
         this.getOcorrencias().add(ocorrencia);
         return ocorrencia;
     }
+
+    public void finalizar() {
+        if (naoPodeFinalizar()){
+            throw new NegocioException("Entrega não pode ser finalizada");
+        }
+        setStatus(StatusEntrega.FINALIZADA);
+        setDataFinalizacao(OffsetDateTime.now());
+    }
+    public boolean podeSerFinalizada(){
+        return StatusEntrega.PENDENTE.equals(getStatus());
+    }
+    public boolean naoPodeFinalizar(){
+        return !podeSerFinalizada();
+    }
+
 }

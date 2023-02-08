@@ -1,8 +1,10 @@
 package com.reynaldohendson.rhlog.controller;
 
 import com.reynaldohendson.rhlog.dto.ClienteModel;
+import com.reynaldohendson.rhlog.dto.EntregaModel;
 import com.reynaldohendson.rhlog.mapper.ClienteMapper;
 import com.reynaldohendson.rhlog.model.Cliente;
+import com.reynaldohendson.rhlog.repository.ClienteRepository;
 import com.reynaldohendson.rhlog.service.ClienteService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class ClienteController {
     private ClienteService clienteService;
     private ClienteMapper clienteMapper;
+    private ClienteRepository clienteRepository;
 
     @PostMapping
     public ResponseEntity<ClienteModel> saveCliente(@RequestBody @Valid Cliente cliente){
@@ -33,18 +36,14 @@ public class ClienteController {
         return clienteMapper.toCollectionModel(clienteService.listar());
     }
 
-    @GetMapping("/clientes/{nome}")
-    public List<Cliente> findByNome(@PathVariable("nome")String nome){
-        return clienteService.findByNome(nome);
-    }
-
     @GetMapping("/cliente/{id}")
     public ResponseEntity<Object> buscarPorId(@PathVariable ("id") Long id){
         Optional<Cliente> clienteOptional = clienteService.findById(id);
-        if(!clienteOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(clienteOptional.get());
+        return clienteOptional.<ResponseEntity<Object>>
+                map(cliente -> ResponseEntity.status(HttpStatus.OK)
+                .body(cliente))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Client not found."));
     }
 
     @PutMapping("cliente/{id}")

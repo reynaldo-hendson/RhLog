@@ -42,10 +42,6 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public List<Cliente> findByNome(String nome){
-        return clienteRepository.findByNome(nome);
-    }
-
     public Optional<Cliente> findById(Long id){
         return clienteRepository.findById(id);
     }

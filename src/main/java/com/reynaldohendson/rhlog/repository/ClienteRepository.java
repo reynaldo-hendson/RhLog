@@ -1,5 +1,6 @@
 package com.reynaldohendson.rhlog.repository;
 
+import com.reynaldohendson.rhlog.dto.ClienteModel;
 import com.reynaldohendson.rhlog.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +12,6 @@ import java.util.Optional;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
-    List<Cliente> findByNome(@Param(value = "nome")String nome);
+    List<ClienteModel> findByNomeContains(String nome);
     Optional<Cliente> findByEmail(String email);
 }

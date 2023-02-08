@@ -5,6 +5,7 @@ import com.reynaldohendson.rhlog.dto.EntregaModel;
 import com.reynaldohendson.rhlog.mapper.EntregaMapper;
 import com.reynaldohendson.rhlog.model.Entrega;
 import com.reynaldohendson.rhlog.repository.EntregaRepository;
+import com.reynaldohendson.rhlog.service.FinalizacaoEntregaService;
 import com.reynaldohendson.rhlog.service.SolicitacaoEntregaService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class EntregaController {
     private SolicitacaoEntregaService solicitacaoEntregaService;
     private EntregaRepository entregaRepository;
     private EntregaMapper entregaMapper;
+    private FinalizacaoEntregaService finalizacaoEntregaService;
 
     @PostMapping
     public ResponseEntity<EntregaModel> solicitar(@RequestBody @Valid Entrega entrega){
@@ -42,4 +44,12 @@ public class EntregaController {
                 .map(entrega -> ResponseEntity.ok(entregaMapper.toModel(entrega)))
                 .orElse(ResponseEntity.notFound().build());
     }
+    @PutMapping("/{entregaId}/finalizar")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void finalizar(@PathVariable Long entregaId){
+            finalizacaoEntregaService.finalizar(entregaId);
+    }
+
+
+
 }
