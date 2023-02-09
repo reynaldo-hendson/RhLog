@@ -7,7 +7,6 @@
 + Java 17
 + Spring Boot
 + Jpa
-+ FlyWay
 + Validation 
 + Postman
 
@@ -18,6 +17,7 @@
 + RestApi
 + Api aborda crud padrão, mais uns find personalizados.
 + Configuração da data para ISO-8601
++ Model Mapper
 + Validação em cascata e validation Groups;
 
 ### Observações:
