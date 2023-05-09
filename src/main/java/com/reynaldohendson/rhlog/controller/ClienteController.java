@@ -17,7 +17,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/api/v1/rhlog/")
+@RequestMapping("/api/v1/rhlog/clientes")
 @AllArgsConstructor
 public class ClienteController {
     private ClienteService clienteService;
@@ -31,12 +31,12 @@ public class ClienteController {
                 .body(clienteMapper.toModel(clienteCadastro));
 
     }
-    @GetMapping("/clientes")
+    @GetMapping
     public List<ClienteModel> listar(){
         return clienteMapper.toCollectionModel(clienteService.listar());
     }
 
-    @GetMapping("/cliente/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Object> buscarPorId(@PathVariable ("id") Long id){
         Optional<Cliente> clienteOptional = clienteService.findById(id);
         return clienteOptional.<ResponseEntity<Object>>
@@ -46,7 +46,7 @@ public class ClienteController {
                         .body("Client not found."));
     }
 
-    @PutMapping("cliente/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> atualizarCliente(@PathVariable("id") @Valid Long id,@RequestBody Cliente cliente){
         Optional<Cliente> clienteOptional = clienteService.findById(id);
         if(!clienteOptional.isPresent()){
