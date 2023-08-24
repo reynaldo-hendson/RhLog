@@ -8,7 +8,7 @@
 + Spring Boot
 + Jpa
 + Validation 
-+ Postman
+
 
 ### Database:
 + MySql
@@ -21,4 +21,4 @@
 + Validação em cascata e validation Groups;
 
 ### Observações:
-+ No arquivo application.properties, trocar a senha do banco de dados.
++ Antes de iniciar o projeto trocar a senha de acesso do banco de dados no arquivo application.properties.
