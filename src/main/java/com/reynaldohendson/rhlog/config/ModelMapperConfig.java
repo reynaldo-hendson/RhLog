@@ -1,4 +1,4 @@
-package com.reynaldohendson.rhlog.connfig;
+package com.reynaldohendson.rhlog.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
