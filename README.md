@@ -3,7 +3,7 @@
 <h1>Projeto: API Controle de entregas</h1>
 <hr>
 <h3>Descrição do desafio</h3>
-Projeto elaborado para fazer o controle de entregas desde o cadastro das entregas e clientes, acompanhando o status das entreas e as ocorrências das mesmas.
+Projeto elaborado para fazer o controle de entregas desde o cadastro das entregas e clientes, acompanhando o status das entregas e as ocorrências das mesmas.
 <hr>
 <h3>Tecnologias Utilizadas</h3>
 
